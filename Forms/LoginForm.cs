@@ -42,6 +42,7 @@ namespace WekaWeka
                 return;
             }
             MessageBox.Show($"IsActive value: {user.Is_active}");
+            
 
             if (user.Is_active != 1)
             {
@@ -59,6 +60,7 @@ namespace WekaWeka
 
             // SUCCESS
             SessionManager.StartSession(user);
+            MessageBox.Show($"NodeId: {SessionManager.CurrentNodeId}");
 
 
             // open main form

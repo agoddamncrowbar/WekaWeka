@@ -14,93 +14,72 @@ namespace WekaWeka.Repositories
             using var conn = new SQLiteConnection(Db.ConnectionString);
 
             conn.Execute(@"
-                INSERT INTO luggage (
-                    id, customer_id, description, weight,
-                    tag_number, status,
-                    origin, destination,
-                    node_id, created_at, updated_at, is_deleted
-                )
-                VALUES (
-                    @Id, @CustomerId, @Description, @Weight,
-                    @TagNumber, @Status,
-                    @Origin, @Destination,
-                    @NodeId, @CreatedAt, @UpdatedAt, 0
-                )
-            ", luggage);
+            INSERT INTO luggage (
+                id, customer_id, description, weight,
+                tag_number, status,
+                origin, current_location,
+                is_fragile,
+                node_id, created_at, updated_at, is_deleted
+            )
+            VALUES (
+                @id, @customer_id, @description, @weight,
+                @tag_number, @status,
+                @origin, @current_location,
+                @is_fragile,
+                @node_id, @created_at, @updated_at, 0
+            )
+        ", luggage);
         }
 
-        public Luggage GetByTag(string tagNumber)
+        public Luggage GetByTag(string tag_number)
         {
             using var conn = new SQLiteConnection(Db.ConnectionString);
 
             return conn.QueryFirstOrDefault<Luggage>(@"
                 SELECT
                     id,
-                    customer_id as CustomerId,
+                    customer_id as customer_id,
                     description,
                     weight,
-                    tag_number as TagNumber,
+                    tag_number as tag_number,
                     status,
                     origin,
-                    destination,
-                    node_id as NodeId,
-                    created_at as CreatedAt,
-                    updated_at as UpdatedAt,
-                    is_deleted as IsDeleted
+                    current_location,
+                    node_id as node_id,
+                    created_at as created_at,
+                    updated_at as updated_at,
+                    is_deleted as is_deleted
                 FROM luggage
-                WHERE tag_number = @TagNumber
+                WHERE tag_number = @tag_number
                   AND is_deleted = 0
                 LIMIT 1
-            ", new { TagNumber = tagNumber });
+            ", new { tag_number = tag_number });
         }
 
-        public List<Luggage> GetByCustomer(string customerId)
+        public List<Luggage> GetByCustomer(string customer_id)
         {
             using var conn = new SQLiteConnection(Db.ConnectionString);
 
             return conn.Query<Luggage>(@"
                 SELECT
                     id,
-                    customer_id as CustomerId,
+                    customer_id as customer_id,
                     description,
                     weight,
-                    tag_number as TagNumber,
+                    tag_number as tag_number,
                     status,
                     origin,
-                    destination,
-                    node_id as NodeId,
-                    created_at as CreatedAt,
-                    updated_at as UpdatedAt,
-                    is_deleted as IsDeleted
+                    current_location,
+                    node_id as node_id,
+                    created_at as created_at,
+                    updated_at as updated_at,
+                    is_deleted as is_deleted
                 FROM luggage
-                WHERE customer_id = @CustomerId
+                WHERE customer_id = @customer_id
                   AND is_deleted = 0
+                  AND is_checkedout = 0
                 ORDER BY created_at DESC
-            ", new { CustomerId = customerId }).AsList();
-        }
-
-        public List<Luggage> GetAll()
-        {
-            using var conn = new SQLiteConnection(Db.ConnectionString);
-
-            return conn.Query<Luggage>(@"
-                SELECT
-                    id,
-                    customer_id as CustomerId,
-                    description,
-                    weight,
-                    tag_number as TagNumber,
-                    status,
-                    origin,
-                    destination,
-                    node_id as NodeId,
-                    created_at as CreatedAt,
-                    updated_at as UpdatedAt,
-                    is_deleted as IsDeleted
-                FROM luggage
-                WHERE is_deleted = 0
-                ORDER BY created_at DESC
-            ").AsList();
+            ", new { customer_id = customer_id }).AsList();
         }
 
         public void UpdateStatus(string id, string status)
@@ -109,14 +88,14 @@ namespace WekaWeka.Repositories
 
             conn.Execute(@"
                 UPDATE luggage
-                SET status = @Status,
-                    updated_at = @UpdatedAt
-                WHERE id = @Id
+                SET status = @status,
+                    updated_at = @updated_at
+                WHERE id = @id
             ", new
             {
-                Id = id,
-                Status = status,
-                UpdatedAt = DateTime.UtcNow.ToString("o")
+                id = id,
+                status = status,
+                updated_at = DateTime.UtcNow.ToString("o")
             });
         }
     }

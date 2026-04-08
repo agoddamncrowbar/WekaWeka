@@ -16,6 +16,8 @@
 
         public string CreatedAt { get; set; }
         public string UpdatedAt { get; set; }
+        public int is_checkedout { get; set; }   // 0/1
+        public string checkout_id { get; set; }
 
         public int IsDeleted { get; set; }
     }

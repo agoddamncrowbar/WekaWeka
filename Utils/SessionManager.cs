@@ -17,7 +17,7 @@ namespace WekaWeka.Utils
         public static void StartSession(User user)
         {
             CurrentUser = user;
-            CurrentNodeId = user.NodeId;
+            CurrentNodeId = user.node_id;
 
             // persist session (save user id)
             File.WriteAllText(SessionFile, user.Id);
@@ -44,7 +44,7 @@ namespace WekaWeka.Utils
             }
 
             CurrentUser = user;
-            CurrentNodeId = user.NodeId;
+            CurrentNodeId = user.node_id;
         }
 
         // Logout

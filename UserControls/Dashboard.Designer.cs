@@ -52,7 +52,7 @@
             btnCheckout.TabIndex = 0;
             btnCheckout.Text = "Checkout";
             btnCheckout.UseVisualStyleBackColor = true;
-            btnCheckout.Click += btnCheckin_Click;
+            btnCheckout.Click += btnCheckout_Click;
             // 
             // btnLuggageList
             // 

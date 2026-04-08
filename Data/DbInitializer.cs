@@ -54,12 +54,44 @@ namespace WekaWeka.Data
                 tag_number TEXT UNIQUE,
                 status TEXT NOT NULL,
                 origin TEXT,
-                destination TEXT,
+                current_location TEXT,
+                is_fragile INTEGER NOT NULL DEFAULT 0,
                 node_id TEXT NOT NULL,
                 created_at TEXT NOT NULL,
                 updated_at TEXT NOT NULL,
+                is_checkedout INTEGER NOT NULL DEFAULT 0,
+                checkout_id TEXT,
                 is_deleted INTEGER NOT NULL DEFAULT 0,
                 FOREIGN KEY (customer_id) REFERENCES customers(id)
+            );
+            CREATE TABLE IF NOT EXISTS luggage_checkouts (
+                id TEXT PRIMARY KEY,
+                luggage_id TEXT NOT NULL,
+                customer_id TEXT NOT NULL,
+                -- who physically collected it
+                collector_name TEXT,
+                collector_phone TEXT,
+                collector_id_number TEXT,
+                -- relationship to customer
+                relationship_to_customer TEXT, -- self, friend, courier, etc.
+                remarks TEXT,
+                checked_out_by_user_id TEXT NOT NULL, -- staff member
+                node_id TEXT NOT NULL,
+                checked_out_at TEXT NOT NULL,
+                FOREIGN KEY (luggage_id) REFERENCES luggage(id),
+                FOREIGN KEY (customer_id) REFERENCES customers(id)
+            );
+            CREATE TABLE IF NOT EXISTS luggage_movements (
+                id TEXT PRIMARY KEY,
+                luggage_id TEXT NOT NULL,
+                from_location TEXT,
+                to_location TEXT NOT NULL,
+                moved_by_user_id TEXT NOT NULL,
+                node_id TEXT NOT NULL,
+                movement_type TEXT NOT NULL, -- transfer, checkin, relocation, etc.
+                remarks TEXT,
+                moved_at TEXT NOT NULL,
+                FOREIGN KEY (luggage_id) REFERENCES luggage(id)
             );
             ";
 

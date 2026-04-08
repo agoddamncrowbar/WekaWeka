@@ -1,3 +1,5 @@
+using WekaWeka.UserControls;
+
 namespace WekaWeka
 {
     public partial class MainForm : Form
@@ -23,12 +25,12 @@ namespace WekaWeka
 
             dashboard.OnCheckinClicked += () =>
             {
-                LoadControl(new UserControls.CheckinControl());
+                ShowCheckin();
             };
 
             dashboard.OnCheckoutClicked += () =>
             {
-                LoadControl(new UserControls.CheckoutControl());
+                ShowCheckoutSearch();
             };
 
             dashboard.OnLuggageListClicked += () =>
@@ -41,6 +43,28 @@ namespace WekaWeka
             };
 
             LoadControl(dashboard);
+        }
+        private void ShowCheckin()
+        {
+            var checkin = new CheckinControl();
+
+            checkin.OnNavigate += (control) =>
+            {
+                LoadControl(control);
+            };
+
+            LoadControl(checkin);
+        }
+        private void ShowCheckoutSearch()
+        {
+            var control = new CustomerCheckoutSearchControl();
+
+            control.OnProceedToCheckout += (selectedLuggage, customer) =>
+            {
+                LoadControl(new CheckoutControl(selectedLuggage, customer));
+            };
+
+            LoadControl(control);
         }
     }
 }
