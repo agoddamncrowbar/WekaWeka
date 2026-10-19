@@ -5,6 +5,7 @@ using System.Data;
 using System.Drawing;
 using System.Text;
 using System.Windows.Forms;
+using WekaWeka.Data;
 using WekaWeka.Repositories;
 using WekaWeka.Utils;
 
@@ -20,6 +21,20 @@ namespace WekaWeka
         private void LoginForm_Load(object sender, EventArgs e)
         {
 
+        }
+        public bool TestConnection()
+        {
+            try
+            {
+                using var conn = MySqlDb.GetConnection();
+                conn.Open();
+                return true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+                return false;
+            }
         }
 
         private void btnLogin_Click(object sender, EventArgs e)
@@ -49,8 +64,16 @@ namespace WekaWeka
                 lblStatusTxt.Text = "User is inactive";
                 return;
             }
+            if (TestConnection())
+            {
+                MessageBox.Show("Database connection successful");
+            }
+            else
+            {
+                MessageBox.Show("Database connection failed");
+            }
 
-            var hashed = PasswordHelper.Hash(password);
+                var hashed = PasswordHelper.Hash(password);
 
             if (user.password_hash != hashed)
             {

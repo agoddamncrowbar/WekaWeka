@@ -42,7 +42,7 @@
             // 
             // btnSearch
             // 
-            btnSearch.Location = new Point(669, 49);
+            btnSearch.Location = new Point(621, 32);
             btnSearch.Name = "btnSearch";
             btnSearch.Size = new Size(94, 29);
             btnSearch.TabIndex = 0;
@@ -52,7 +52,7 @@
             // 
             // txtSearch
             // 
-            txtSearch.Location = new Point(60, 51);
+            txtSearch.Location = new Point(12, 34);
             txtSearch.Name = "txtSearch";
             txtSearch.Size = new Size(453, 27);
             txtSearch.TabIndex = 1;
@@ -60,7 +60,7 @@
             // label1
             // 
             label1.AutoSize = true;
-            label1.Location = new Point(60, 28);
+            label1.Location = new Point(12, 11);
             label1.Name = "label1";
             label1.Size = new Size(182, 20);
             label1.TabIndex = 2;
@@ -69,7 +69,7 @@
             // dgvCustomers
             // 
             dgvCustomers.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvCustomers.Location = new Point(60, 118);
+            dgvCustomers.Location = new Point(12, 101);
             dgvCustomers.MultiSelect = false;
             dgvCustomers.Name = "dgvCustomers";
             dgvCustomers.RowHeadersWidth = 51;
@@ -81,7 +81,7 @@
             // dgvLuggage
             // 
             dgvLuggage.ColumnHeadersHeightSizeMode = DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            dgvLuggage.Location = new Point(60, 360);
+            dgvLuggage.Location = new Point(12, 343);
             dgvLuggage.Name = "dgvLuggage";
             dgvLuggage.RowHeadersWidth = 51;
             dgvLuggage.SelectionMode = DataGridViewSelectionMode.FullRowSelect;
@@ -93,7 +93,7 @@
             // lblStatus
             // 
             lblStatus.AutoSize = true;
-            lblStatus.Location = new Point(60, 323);
+            lblStatus.Location = new Point(12, 306);
             lblStatus.Name = "lblStatus";
             lblStatus.Size = new Size(189, 20);
             lblStatus.TabIndex = 2;
@@ -102,7 +102,7 @@
             // btnProceed
             // 
             btnProceed.Enabled = false;
-            btnProceed.Location = new Point(669, 572);
+            btnProceed.Location = new Point(621, 555);
             btnProceed.Name = "btnProceed";
             btnProceed.Size = new Size(94, 29);
             btnProceed.TabIndex = 0;
@@ -113,7 +113,7 @@
             // chkSelectAll
             // 
             chkSelectAll.AutoSize = true;
-            chkSelectAll.Location = new Point(662, 323);
+            chkSelectAll.Location = new Point(614, 306);
             chkSelectAll.Name = "chkSelectAll";
             chkSelectAll.Size = new Size(93, 24);
             chkSelectAll.TabIndex = 4;
@@ -134,7 +134,7 @@
             Controls.Add(btnProceed);
             Controls.Add(btnSearch);
             Name = "CustomerCheckoutSearchControl";
-            Size = new Size(810, 630);
+            Size = new Size(750, 650);
             ((System.ComponentModel.ISupportInitialize)dgvCustomers).EndInit();
             ((System.ComponentModel.ISupportInitialize)dgvLuggage).EndInit();
             ResumeLayout(false);

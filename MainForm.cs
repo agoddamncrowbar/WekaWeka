@@ -1,3 +1,4 @@
+using WekaWeka.Data;
 using WekaWeka.UserControls;
 
 namespace WekaWeka
@@ -8,11 +9,28 @@ namespace WekaWeka
         {
             InitializeComponent();
         }
-        private void LoadControl(UserControl control)
+        private AppLayoutControl _layout;
+        
+        private void LoadWithSidebar(UserControl control)
         {
-            mainPanel.Controls.Clear();
-            control.Dock = DockStyle.Fill;
-            mainPanel.Controls.Add(control);
+            if (_layout == null)
+            {
+                _layout = new AppLayoutControl();
+
+                _layout.OnDashboardClicked += ShowDashboard;
+                _layout.OnCheckinClicked += ShowCheckin;
+                _layout.OnCheckoutClicked += ShowCheckoutSearch;
+                _layout.OnLuggageListClicked += () =>
+                    _layout.LoadContent(new LuggageListControl());
+                _layout.OnAddCustomerClicked += () =>
+                    _layout.LoadContent(new AddCustomerControl());
+
+                mainPanel.Controls.Clear();
+                _layout.Dock = DockStyle.Fill;
+                mainPanel.Controls.Add(_layout);
+            }
+
+            _layout.LoadContent(control);
         }
 
         private void MainForm_Load(object sender, EventArgs e)
@@ -21,28 +39,20 @@ namespace WekaWeka
         }
         private void ShowDashboard()
         {
-            var dashboard = new UserControls.Dashboard();
+            _layout = null; // reset layout
 
-            dashboard.OnCheckinClicked += () =>
-            {
-                ShowCheckin();
-            };
+            var dashboard = new Dashboard();
 
-            dashboard.OnCheckoutClicked += () =>
-            {
-                ShowCheckoutSearch();
-            };
-
+            dashboard.OnCheckinClicked += ShowCheckin;
+            dashboard.OnCheckoutClicked += ShowCheckoutSearch;
             dashboard.OnLuggageListClicked += () =>
-            {
-                LoadControl(new UserControls.LuggageListControl());
-            };
+                LoadWithSidebar(new LuggageListControl());
             dashboard.OnAddCustomerClicked += () =>
-            {
-                LoadControl(new UserControls.AddCustomerControl());
-            };
+                LoadWithSidebar(new AddCustomerControl());
 
-            LoadControl(dashboard);
+            mainPanel.Controls.Clear();
+            dashboard.Dock = DockStyle.Fill;
+            mainPanel.Controls.Add(dashboard);
         }
         private void ShowCheckin()
         {
@@ -50,10 +60,10 @@ namespace WekaWeka
 
             checkin.OnNavigate += (control) =>
             {
-                LoadControl(control);
+                LoadWithSidebar(control);
             };
 
-            LoadControl(checkin);
+            LoadWithSidebar(checkin);
         }
         private void ShowCheckoutSearch()
         {
@@ -61,10 +71,10 @@ namespace WekaWeka
 
             control.OnProceedToCheckout += (selectedLuggage, customer) =>
             {
-                LoadControl(new CheckoutControl(selectedLuggage, customer));
+                LoadWithSidebar(new CheckoutControl(selectedLuggage, customer));
             };
 
-            LoadControl(control);
+            LoadWithSidebar(control);
         }
     }
 }

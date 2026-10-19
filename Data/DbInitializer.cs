@@ -62,6 +62,7 @@ namespace WekaWeka.Data
                 is_checkedout INTEGER NOT NULL DEFAULT 0,
                 checkout_id TEXT,
                 is_deleted INTEGER NOT NULL DEFAULT 0,
+                last_synced_at TEXT,
                 FOREIGN KEY (customer_id) REFERENCES customers(id)
             );
             CREATE TABLE IF NOT EXISTS luggage_checkouts (
@@ -78,6 +79,7 @@ namespace WekaWeka.Data
                 checked_out_by_user_id TEXT NOT NULL, -- staff member
                 node_id TEXT NOT NULL,
                 checked_out_at TEXT NOT NULL,
+                last_synced_at TEXT,
                 FOREIGN KEY (luggage_id) REFERENCES luggage(id),
                 FOREIGN KEY (customer_id) REFERENCES customers(id)
             );
@@ -91,6 +93,7 @@ namespace WekaWeka.Data
                 movement_type TEXT NOT NULL, -- transfer, checkin, relocation, etc.
                 remarks TEXT,
                 moved_at TEXT NOT NULL,
+                last_synced_at TEXT,
                 FOREIGN KEY (luggage_id) REFERENCES luggage(id)
             );
             ";
@@ -149,6 +152,7 @@ namespace WekaWeka.Data
                 node_id TEXT NOT NULL,
                 created_at TEXT NOT NULL,
                 updated_at TEXT NOT NULL,
+                last_synced_at TEXT,
                 is_deleted INTEGER NOT NULL DEFAULT 0
             );
             ";
